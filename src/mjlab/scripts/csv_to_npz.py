@@ -44,16 +44,32 @@ class MotionLoader:
     self._interpolate_motion()
     self._compute_velocities()
 
+  def _has_header(self) -> bool:
+    """Returns True if the CSV file has a text header row."""
+    with open(self.motion_file, encoding="utf-8") as f:
+      first_line = f.readline()
+    if not first_line.strip():
+      return False
+    try:
+      for v in first_line.strip().split(","):
+        float(v)
+      return False
+    except ValueError:
+      return True
+
   def _load_motion(self):
     """Loads the motion from the csv file."""
+    header_rows = 1 if self._has_header() else 0
     if self.line_range is None:
-      motion = torch.from_numpy(np.loadtxt(self.motion_file, delimiter=","))
+      motion = torch.from_numpy(
+        np.loadtxt(self.motion_file, delimiter=",", skiprows=header_rows)
+      )
     else:
       motion = torch.from_numpy(
         np.loadtxt(
           self.motion_file,
           delimiter=",",
-          skiprows=self.line_range[0] - 1,
+          skiprows=header_rows + self.line_range[0] - 1,
           max_rows=self.line_range[1] - self.line_range[0] + 1,
         )
       )
