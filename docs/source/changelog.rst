@@ -5,6 +5,13 @@ Changelog
 Upcoming version (not yet released)
 -----------------------------------
 
+Added
+^^^^^
+
+- Added Booster K1 velocity tracking tasks (``Mjlab-Velocity-Flat-Booster-K1``
+  and ``Mjlab-Velocity-Rough-Booster-K1``), mirroring the existing Unitree G1
+  velocity tracking setup.
+
 Fixed
 ^^^^^
 
