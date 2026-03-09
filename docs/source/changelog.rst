@@ -11,6 +11,9 @@ Added
 - Added Booster K1 velocity tracking tasks (``Mjlab-Velocity-Flat-Booster-K1``
   and ``Mjlab-Velocity-Rough-Booster-K1``), mirroring the existing Unitree G1
   velocity tracking setup.
+- Added Booster K1 (``k1``) robot support to the ``csv_to_npz`` script via a
+  new ``--robot`` argument (``"g1"`` or ``"k1"``); defaults to ``"g1"`` for
+  backward compatibility.
 
 Fixed
 ^^^^^
