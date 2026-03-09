@@ -14,6 +14,9 @@ Added
 - Added Booster K1 (``k1``) robot support to the ``csv_to_npz`` script via a
   new ``--robot`` argument (``"g1"`` or ``"k1"``); defaults to ``"g1"`` for
   backward compatibility.
+- The ``csv_to_npz`` script now supports CSV files with a text header row
+  (e.g. ``root_pos_x,root_pos_y,...,dof_pos_N``). Header detection is
+  automatic; headerless CSV files continue to work unchanged.
 
 Fixed
 ^^^^^
