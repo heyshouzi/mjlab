@@ -8,6 +8,10 @@ Upcoming version (not yet released)
 Added
 ^^^^^
 
+- Added ``replay_motion.py`` script (``src/mjlab/tasks/tracking/scripts/``) for
+  replaying motion NPZ files on any tracking task robot (defaults to Booster K1).
+  Supports both local ``--motion-file`` paths and W&B ``--registry-name``
+  artifacts.
 - Added Booster K1 velocity tracking tasks (``Mjlab-Velocity-Flat-Booster-K1``
   and ``Mjlab-Velocity-Rough-Booster-K1``), mirroring the existing Unitree G1
   velocity tracking setup.
