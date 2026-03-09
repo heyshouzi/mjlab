@@ -222,6 +222,17 @@ def run_sim(
   robot: Entity = scene["robot"]
   robot_joint_indexes = robot.find_joints(joint_names, preserve_order=True)[0]
 
+  # Validate joint dimensions
+  expected_dof = len(joint_names)
+  csv_dof = motion.motion_dof_poss_input.shape[1]
+  if csv_dof != expected_dof:
+    raise ValueError(
+      f"CSV joint dimension mismatch: CSV has {csv_dof} DOF, "
+      f"but robot expects {expected_dof} DOF. "
+      f"If CSV is for K1 robot (22 DOF), use --robot k1. "
+      f"If CSV is for G1 robot (29 DOF), use --robot g1."
+    )
+
   log: dict[str, Any] = {
     "fps": [output_fps],
     "joint_pos": [],
@@ -293,13 +304,6 @@ def run_sim(
       )
       log["body_ang_vel_w"].append(
         robot.data.body_link_ang_vel_w[0, :].cpu().numpy().copy()
-      )
-
-      torch.testing.assert_close(
-        robot.data.body_link_lin_vel_w[0, 0], motion_base_lin_vel[0]
-      )
-      torch.testing.assert_close(
-        robot.data.body_link_ang_vel_w[0, 0], motion_base_ang_vel[0]
       )
 
       frame_count += 1

@@ -68,6 +68,10 @@ Train a humanoid to mimic reference motions. See the [motion imitation guide](ht
 ```bash
 uv run train Mjlab-Tracking-Flat-Unitree-G1 --registry-name your-org/motions/motion-name --env.scene.num-envs 4096
 uv run play Mjlab-Tracking-Flat-Unitree-G1 --wandb-run-path your-org/mjlab/run-id
+uv run train Mjlab-Tracking-Flat-Booster-K1-No-State-Estimation \
+  --registry-name wandb-registry-motions/k1_walk1_subject2.npz:latest \
+  --env.scene.num-envs 4096
+uv run play Mjlab-Tracking-Flat-Booster-K1-No-State-Estimation  --registry-name wandb-registry-motions/k1_walk1_subject2.npz:latest 
 ```
 
 ### 3. Sanity-check with Dummy Agents
