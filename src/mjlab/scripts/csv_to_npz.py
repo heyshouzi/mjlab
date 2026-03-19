@@ -392,6 +392,16 @@ G1_JOINT_NAMES = [
 ]
 
 K1_JOINT_NAMES = [
+  "AAHead_yaw",
+  "Head_pitch",
+  "ALeft_Shoulder_Pitch",
+  "Left_Shoulder_Roll",
+  "Left_Elbow_Pitch",
+  "Left_Elbow_Yaw",
+  "ARight_Shoulder_Pitch",
+  "Right_Shoulder_Roll",
+  "Right_Elbow_Pitch",
+  "Right_Elbow_Yaw",
   "Left_Hip_Pitch",
   "Left_Hip_Roll",
   "Left_Hip_Yaw",
@@ -404,16 +414,6 @@ K1_JOINT_NAMES = [
   "Right_Knee_Pitch",
   "Right_Ankle_Pitch",
   "Right_Ankle_Roll",
-  "ALeft_Shoulder_Pitch",
-  "Left_Shoulder_Roll",
-  "Left_Elbow_Pitch",
-  "Left_Elbow_Yaw",
-  "ARight_Shoulder_Pitch",
-  "Right_Shoulder_Roll",
-  "Right_Elbow_Pitch",
-  "Right_Elbow_Yaw",
-  "AAHead_yaw",
-  "Head_pitch",
 ]
 
 

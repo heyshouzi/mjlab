@@ -72,6 +72,7 @@ uv run train Mjlab-Tracking-Flat-Booster-K1-No-State-Estimation \
   --registry-name wandb-registry-motions/k1_walk1_subject2.npz:latest \
   --env.scene.num-envs 4096
 uv run play Mjlab-Tracking-Flat-Booster-K1-No-State-Estimation  --registry-name wandb-registry-motions/k1_walk1_subject2.npz:latest 
+
 ```
 
 ### 3. Sanity-check with Dummy Agents
