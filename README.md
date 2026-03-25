@@ -87,6 +87,94 @@ uv run play Mjlab-Your-Task-Id --agent random  # Sends uniform random actions
 When running motion-tracking tasks, add `--registry-name your-org/motions/motion-name` to the command.
 
 
+## Motion Replay
+
+### Converting CSV to NPZ
+
+To convert motion CSV files (e.g., from LAFAN dataset) to NPZ format for use with mjlab:
+
+```bash
+# Convert for G1 robot (29 DOF)
+uv run python src/mjlab/scripts/csv_to_npz.py \
+    --input-file /path/to/motion.csv \
+    --output-name my_motion \
+    --robot g1 \
+    --input-fps 30 \
+    --output-fps 50
+
+# Convert for K1 robot (22 DOF)
+uv run python src/mjlab/scripts/csv_to_npz.py \
+    --input-file /path/to/motion.csv \
+    --output-name my_motion \
+    --robot k1 \
+    --input-fps 30 \
+    --output-fps 50
+
+# Process a specific frame range (START END, both inclusive)
+uv run python src/mjlab/scripts/csv_to_npz.py \
+    --input-file /path/to/motion.csv \
+    --output-name my_motion \
+    --robot g1 \
+    --line-range 122 722
+```
+
+**Arguments:**
+- `--input-file`: Path to input CSV file (required)
+- `--output-name`: Output name for W&B registry (required)
+- `--robot`: Robot type: `g1` (Unitree G1, 29 DOF) or `k1` (Booster K1, 22 DOF) (default: g1)
+- `--input-fps`: Input CSV framerate (default: 30)
+- `--output-fps`: Output NPZ framerate (default: 50)
+- `--line-range`: Frame range START END (both inclusive, 1-indexed)
+- `--render`: Enable video rendering
+
+The script automatically uploads the converted motion to W&B registry at `motions/<output-name>`.
+
+**G1 joint order (29 joints):**
+
+| Index | Joint | Index | Joint |
+|-------|-------|-------|-------|
+| 0-5 | Left leg (hip_pitch/roll/yaw, knee, ankle_pitch/roll) | 15-21 | Left arm (shoulder_pitch/roll/yaw, elbow, wrist_roll/pitch/yaw) |
+| 6-11 | Right leg | 22-28 | Right arm |
+| 12-14 | Waist (yaw/roll/pitch) | | |
+
+**K1 joint order (22 joints):**
+
+| Index | Joint | Index | Joint |
+|-------|-------|-------|-------|
+| 0 | Head_yaw | 11-16 | Left leg (Hip_pitch/roll/yaw, Knee, Ankle_pitch/roll) |
+| 1 | Head_pitch | 17-22 | Right leg |
+| 2-6 | Left arm (Shoulder_pitch/roll, Elbow_pitch/yaw) | | |
+| 7-10 | Right arm | | |
+
+### Replaying Motion
+
+Replay a motion NPZ file to visualize robot behavior:
+
+```bash
+# Replay on G1 robot with viser viewer (default)
+uv run python src/mjlab/scripts/replay_npz.py --robot g1 --motion-file /path/to/motion.npz
+
+# Replay on K1 robot
+uv run python src/mjlab/scripts/replay_npz.py --robot k1 --motion-file /path/to/motion.npz
+
+# With native MuJoCo viewer (if DISPLAY is available)
+uv run python src/mjlab/scripts/replay_npz.py --robot g1 --motion-file /path/to/motion.npz --viewer native
+
+# Load motion from W&B registry (auto-downloads to ~/mjlab/motion/)
+uv run python src/mjlab/scripts/replay_npz.py --robot g1 --registry-name my-org/motions/my-motion
+
+# Adjust playback speed (1.0 = real-time, 2.0 = 2x faster)
+uv run python src/mjlab/scripts/replay_npz.py --robot g1 --motion-file /path/to/motion.npz --speed 2.0
+```
+
+**Arguments:**
+- `--robot`: Robot type: `k1` or `g1` (default: k1)
+- `--motion-file`: Path to local motion NPZ file
+- `--registry-name`: W&B registry artifact name (e.g., `my-org/motions/my-motion`)
+- `--speed`: Playback speed multiplier (default: 1.0, 1.0 = real-time)
+- `--viewer`: Viewer backend: `auto`, `native`, or `viser` (default: auto)
+
+
 ## Documentation
 
 Full documentation is available at **[mujocolab.github.io/mjlab](https://mujocolab.github.io/mjlab/)**.
