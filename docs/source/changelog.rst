@@ -21,6 +21,9 @@ Added
 - The ``csv_to_npz`` script now supports CSV files with a text header row
   (e.g. ``root_pos_x,root_pos_y,...,dof_pos_N``). Header detection is
   automatic; headerless CSV files continue to work unchanged.
+- Added ``STAIRS_TERRAINS_CFG`` terrain preset for progressive stair
+  curriculum training and ``@terrain_preset`` decorator for composing
+  terrain configurations from reusable presets.
 - Added cartpole balance and swingup tasks (``Mjlab-Cartpole-Balance`` and
   ``Mjlab-Cartpole-Swingup``) with a :ref:`tutorial <tutorial-cartpole>`
   that walks through building an environment from scratch.
@@ -142,6 +145,11 @@ Added
   ``frame_pos_w`` and ``frame_quat_w``.
 - ``RingPatternCfg`` ray pattern for concentric ring sampling around each
   frame.
+- ``TerrainHeightSensor``, a ``RayCastSensor`` subclass that computes
+  per-frame vertical clearance above terrain (``sensor.data.heights``).
+  Velocity task configs now use it for ``feet_clearance``,
+  ``feet_swing_height``, and ``foot_height``, replacing the previous
+  world-Z proxy that was incorrect on rough terrain.
 - Cloud training support via `SkyPilot <https://skypilot.readthedocs.io/>`_
   and Lambda Cloud, with documentation covering setup, monitoring, and
   cost management.
